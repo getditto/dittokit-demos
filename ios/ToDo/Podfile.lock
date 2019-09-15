@@ -1,0 +1,16 @@
+PODS:
+  - DittoKit (0.1.2)
+
+DEPENDENCIES:
+  - DittoKit
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - DittoKit
+
+SPEC CHECKSUMS:
+  DittoKit: 8d54b01c221175abe2b30e191708578241c6a4f0
+
+PODFILE CHECKSUM: df55c8b5c6bf89ccbfc23c0b8cd2d57083917f1d
+
+COCOAPODS: 1.8.1

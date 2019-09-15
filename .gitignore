@@ -1,0 +1,22 @@
+# generated files
+bin/
+gen/
+build/
+
+# Android Studio
+.idea
+.gradle
+/*/local.properties
+/*/out
+/*/*/build
+build
+/*/*/production
+*.iml
+*.iws
+*.ipr
+*~
+*.swp
+
+# Build related
+.DS_Store
+.DS_Store?
