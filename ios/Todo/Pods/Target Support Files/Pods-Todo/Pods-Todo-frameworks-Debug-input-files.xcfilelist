@@ -1,0 +1,3 @@
+${PODS_ROOT}/Target Support Files/Pods-ToDo/Pods-ToDo-frameworks.sh
+${PODS_ROOT}/DittoKit/DittoKit.framework
+${PODS_ROOT}/DittoKit/DittoKit.framework.dSYM

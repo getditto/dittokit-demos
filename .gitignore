@@ -5,6 +5,8 @@
 ## Build generated
 build/
 DerivedData/
+.DS_Store
+.DS_Store?
 
 ## Various settings
 *.pbxuser
@@ -46,7 +48,7 @@ playground.xcworkspace
 # you should judge for yourself, the pros and cons are mentioned at:
 # https://guides.cocoapods.org/using/using-cocoapods.html#should-i-check-the-pods-directory-into-source-control
 #
-# Pods/
+Pods/
 
 # Carthage
 #
@@ -66,3 +68,39 @@ fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots/**/*.png
 fastlane/test_output
+
+# built application files
+*.apk
+*.ap_
+
+# files for the dex VM
+*.dex
+  
+# Java class files
+*.class
+  
+# generated files
+bin/
+gen/
+build/
+  
+# Local configuration file (sdk path, etc)
+local.properties
+  
+# Eclipse project files
+.classpath
+.project
+  
+# Android Studio
+.idea
+.gradle
+/*/local.properties
+/*/out
+/*/*/build
+build
+/*/*/production
+*.iml
+*.iws
+*.ipr
+*~
+*.swp
