@@ -30,7 +30,7 @@ class TasksTableViewController: UITableViewController {
         
         // Set your DittoKit access license
         // The SDK will not work without this!
-        ditto.setAccessLicense("<INSERT ACCESS LICENSE>")
+        ditto.setAccessLicense("o2d1c2VyX2lkb3Rlc3RAZGl0dG8ubGl2ZWZleHBpcnl0MjAyMC0xMC0zMVQwMDowMDowMFppc2lnbmF0dXJleFhHYk5Mb0ZmZ2tiRWlUdXJJcVlxOFg5Z2xHZ2ZCMkdoMDZDcTJoR01vMFRvSlNqTXU5RTk0K1JPOXpJRmwxbnVMZnBsTUJqRjJFUFBaUGtqMDZBYjlCZz09")
         
         // This starts DittoKit's background synchronization
         ditto.start()
