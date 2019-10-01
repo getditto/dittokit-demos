@@ -49,7 +49,7 @@ class TasksTableViewController: UITableViewController {
     func setupTaskList() {
         // Query for all tasks and sort by dateCreated
         // Observe changes with a live-query and update the UITableView
-        liveQuery = try! collection.findAll().sort("dateCreated", isAscending: true).observeAndSubscribe() { [weak self] docs, event in
+        liveQuery = try! collection.findAll().sort("dateCreated", isAscending: true).observe { [weak self] docs, event in
             guard let `self` = self else { return }
             switch event {
             case .update(_, let insertions, let deletions, let updates, let moves):

@@ -152,8 +152,8 @@ public class MainActivity extends AppCompatActivity implements NewTaskDialogFrag
             }
         }
 
-        // We use observeAndSubscribe to create a subscription to sync this query with other devices
-        this.liveQuery = collection.findAll().sort("dateCreated", true).observeAndSubscribe(new LiveQueryHandler());
+        // We use observe to create a live query and a subscription to sync this query with other devices
+        this.liveQuery = collection.findAll().sort("dateCreated", true).observe(new LiveQueryHandler());
     }
 
     void checkLocationPermission() {

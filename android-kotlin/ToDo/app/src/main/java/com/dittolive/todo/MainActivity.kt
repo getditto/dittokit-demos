@@ -116,8 +116,8 @@ class MainActivity : AppCompatActivity(), NewTaskDialogFragment.NewTaskDialogLis
         // We will create a long-running live query to keep UI up-to-date
         this.collection = this.ditto!!.store.collection("tasks")
 
-        // We use observeAndSubscribe to create a subscription to sync this query with other devices
-        this.liveQuery = collection!!.findAll().sort("dateCreated", true).observeAndSubscribe { docs, event ->
+        // We use observe to create a live query with a subscription to sync this query with other devices
+        this.liveQuery = collection!!.findAll().sort("dateCreated", true).observe { docs, event ->
             val adapter = (this.viewAdapter as TasksAdapter)
             when (event) {
                 is DittoLiveQueryEvent.Update -> {
