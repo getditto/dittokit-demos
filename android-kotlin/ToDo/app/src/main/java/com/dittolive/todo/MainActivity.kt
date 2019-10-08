@@ -86,7 +86,7 @@ class MainActivity : AppCompatActivity(), NewTaskDialogFragment.NewTaskDialogLis
         // Listen for clicks to mark tasks [in]complete
         tasksAdapter.onItemClick = { task ->
             ditto.store.collection("tasks").findByID(task._id).update { newTask ->
-                newTask["isComplete"].set(!newTask["isComplete"].booleanValue)
+                newTask!!["isComplete"].set(!newTask["isComplete"].booleanValue)
             }
         }
 
