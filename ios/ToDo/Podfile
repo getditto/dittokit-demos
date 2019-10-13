@@ -6,6 +6,6 @@ target 'ToDo' do
   use_frameworks!
 
   # Pods for ToDo
-  pod 'DittoKit', '~> 0.1.4'
+  pod 'DittoKit', '~> 0.1.5'
 
 end

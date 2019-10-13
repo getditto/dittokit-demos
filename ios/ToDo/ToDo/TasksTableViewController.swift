@@ -156,7 +156,7 @@ class TasksTableViewController: UITableViewController {
         let task = tasks[indexPath.row]
         // Update the task to mark completed
         try! collection.findByID(task._id).update({ (newTask) in
-            try! newTask["isComplete"].set(!task["isComplete"].boolValue)
+            try! newTask?["isComplete"].set(!task["isComplete"].boolValue)
         })
     }
 
