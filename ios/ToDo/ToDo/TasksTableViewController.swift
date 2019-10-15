@@ -13,14 +13,14 @@ class TasksTableViewController: UITableViewController {
     // These hold references to DittoKit for easy access
     var ditto: DittoKit!
     var store: DittoStore!
-    var liveQuery: DittoDictionaryLiveQuery?
+    var liveQuery: DittoLiveQuery?
     var collection: DittoCollection!
 
     // We need to format the task creation date into a UTC string
     var dateFormatter = ISO8601DateFormatter()
 
     // This is the UITableView data source
-    var tasks: [DittoDocument<[String: Any?]>] = []
+    var tasks: [DittoDocument] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -113,7 +113,7 @@ class TasksTableViewController: UITableViewController {
                     "text": text,
                     "dateCreated": dateString,
                     "isComplete": false
-                    ])
+                ])
             }
         }))
 
