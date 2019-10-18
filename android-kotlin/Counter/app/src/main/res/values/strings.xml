@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Counter</string>
+    <string name="counter_text_initial">0</string>
+    <string name="minus_button_text">-</string>
+    <string name="plus_button_text">+</string>
+</resources>
