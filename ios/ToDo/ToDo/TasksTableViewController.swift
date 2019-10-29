@@ -39,7 +39,7 @@ class TasksTableViewController: UITableViewController {
         store = ditto.store
         // We will store data in the "tasks" collection
         // DittoKit stores data as collections of documents
-        collection = try! store.collection(name: "tasks")
+        collection = store.collection("tasks")
 
         // This function will create a "live-query" that will update
         // our UITableView
