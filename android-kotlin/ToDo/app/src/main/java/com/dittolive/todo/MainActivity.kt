@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity(), NewTaskDialogFragment.NewTaskDialogLis
         itemTouchHelper.attachToRecyclerView(recyclerView)
 
         // Respond to new task button click
-        addTaskButton.setOnClickListener { view ->
+        addTaskButton.setOnClickListener { _ ->
             showNewTaskUI()
         }
 
@@ -262,8 +262,8 @@ abstract class SwipeToDeleteCallback(context: Context) : ItemTouchHelper.SimpleC
 
         // Draw the delete icon
         deleteIcon!!.setBounds(deleteIconLeft, deleteIconTop, deleteIconRight, deleteIconBottom)
-        deleteIcon!!.setTint(Color.parseColor("#ffffff"))
-        deleteIcon!!.draw(c)
+        deleteIcon.setTint(Color.parseColor("#ffffff"))
+        deleteIcon.draw(c)
 
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
     }
