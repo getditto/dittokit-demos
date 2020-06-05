@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import DittoKit
+import DittoKitSwift
 
 class TasksTableViewController: UITableViewController {
     // These hold references to DittoKit for easy access
@@ -26,7 +26,7 @@ class TasksTableViewController: UITableViewController {
         super.viewDidLoad()
 
         // Create an instance of DittoKit
-        ditto = try! DittoKit()
+        ditto = DittoKit()
 
         // Set your DittoKit access license
         // The SDK will not work without this!
@@ -49,27 +49,27 @@ class TasksTableViewController: UITableViewController {
     func setupTaskList() {
         // Query for all tasks and sort by dateCreated
         // Observe changes with a live-query and update the UITableView
-        liveQuery = try! collection.findAll().sort("dateCreated", isAscending: true).observe { [weak self] docs, event in
+        liveQuery = collection.findAll().sort("dateCreated", direction: .ascending).observe { [weak self] docs, event in
             guard let `self` = self else { return }
             switch event {
-            case .update(_, let insertions, let deletions, let updates, let moves):
-                guard insertions.count > 0 || deletions.count > 0 || updates.count > 0  || moves.count > 0 else { return }
+            case .update(let changes):
+                guard changes.insertions.count > 0 || changes.deletions.count > 0 || changes.updates.count > 0  || changes.moves.count > 0 else { return }
                 DispatchQueue.main.async {
                     self.tableView.beginUpdates()
                     self.tableView.performBatchUpdates({
-                        let deletionIndexPaths = deletions.map { idx -> IndexPath in
+                        let deletionIndexPaths = changes.deletions.map { idx -> IndexPath in
                             return IndexPath(row: idx, section: 0)
                         }
                         self.tableView.deleteRows(at: deletionIndexPaths, with: .automatic)
-                        let insertionIndexPaths = insertions.map { idx -> IndexPath in
+                        let insertionIndexPaths = changes.insertions.map { idx -> IndexPath in
                             return IndexPath(row: idx, section: 0)
                         }
                         self.tableView.insertRows(at: insertionIndexPaths, with: .automatic)
-                        let updateIndexPaths = updates.map { idx -> IndexPath in
+                        let updateIndexPaths = changes.updates.map { idx -> IndexPath in
                             return IndexPath(row: idx, section: 0)
                         }
                         self.tableView.reloadRows(at: updateIndexPaths, with: .automatic)
-                        for move in moves {
+                        for move in changes.moves {
                             let from = IndexPath(row: move.from, section: 0)
                             let to = IndexPath(row: move.to, section: 0)
                             self.tableView.moveRow(at: from, to: to)
@@ -155,8 +155,8 @@ class TasksTableViewController: UITableViewController {
         // Retrieve the task at the row selected
         let task = tasks[indexPath.row]
         // Update the task to mark completed
-        try! collection.findByID(task._id).update({ (newTask) in
-            try! newTask?["isComplete"].set(!task["isComplete"].boolValue)
+        collection.findByID(task.id).update({ (newTask) in
+            newTask?["isComplete"].set(!task["isComplete"].boolValue)
         })
     }
 
@@ -171,7 +171,7 @@ class TasksTableViewController: UITableViewController {
             // Retrieve the task at the row swiped
             let task = tasks[indexPath.row]
             // Delete the task from DittoKit
-            try! collection.findByID(task._id).remove()
+            try! collection.findByID(task.id).remove()
         }
     }
 

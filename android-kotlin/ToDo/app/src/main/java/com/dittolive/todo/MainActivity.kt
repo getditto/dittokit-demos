@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity(), NewTaskDialogFragment.NewTaskDialogLis
 
     private var ditto: DittoKit? = null
     private var collection: DittoCollection? = null
-    private var liveQuery: DittoLiveQuery<Map<String, Any>>? = null
+    private var liveQuery: DittoLiveQuery? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity(), NewTaskDialogFragment.NewTaskDialogLis
                 // Retrieve the task at the row swiped
                 val task = adapter.tasks()[viewHolder.adapterPosition]
                 // Delete the task from DittoKit
-                ditto.store.collection("tasks").findByID(task._id).remove()
+                ditto.store.collection("tasks").findByID(task.id).remove()
             }
         }
 
@@ -85,7 +85,7 @@ class MainActivity : AppCompatActivity(), NewTaskDialogFragment.NewTaskDialogLis
 
         // Listen for clicks to mark tasks [in]complete
         tasksAdapter.onItemClick = { task ->
-            ditto.store.collection("tasks").findByID(task._id).update { newTask ->
+            ditto.store.collection("tasks").findByID(task.id).update { newTask ->
                 newTask!!["isComplete"].set(!newTask["isComplete"].booleanValue)
             }
         }
@@ -117,7 +117,7 @@ class MainActivity : AppCompatActivity(), NewTaskDialogFragment.NewTaskDialogLis
         this.collection = this.ditto!!.store.collection("tasks")
 
         // We use observe to create a live query with a subscription to sync this query with other devices
-        this.liveQuery = collection!!.findAll().sort("dateCreated", true).observe { docs, event ->
+        this.liveQuery = collection!!.findAll().sort("dateCreated", DittoSortDirection.Ascending).observe { docs, event ->
             val adapter = (this.viewAdapter as TasksAdapter)
             when (event) {
                 is DittoLiveQueryEvent.Update -> {
@@ -151,9 +151,9 @@ class MainActivity : AppCompatActivity(), NewTaskDialogFragment.NewTaskDialogLis
 }
 
 class TasksAdapter: RecyclerView.Adapter<TasksAdapter.TaskViewHolder>() {
-    private val tasks = mutableListOf<DittoDocument<Map<String, Any>>>()
+    private val tasks = mutableListOf<DittoDocument>()
 
-    var onItemClick: ((DittoDocument<Map<String, Any>>) -> Unit)? = null
+    var onItemClick: ((DittoDocument) -> Unit)? = null
 
     class TaskViewHolder(v: View): RecyclerView.ViewHolder(v)
 
@@ -174,11 +174,11 @@ class TasksAdapter: RecyclerView.Adapter<TasksAdapter.TaskViewHolder>() {
 
     override fun getItemCount() = this.tasks.size
 
-    fun tasks(): List<DittoDocument<Map<String, Any>>> {
+    fun tasks(): List<DittoDocument> {
         return this.tasks.toList()
     }
 
-    fun set(tasks: List<DittoDocument<Map<String, Any>>>): Int {
+    fun set(tasks: List<DittoDocument>): Int {
         this.tasks.clear()
         this.tasks.addAll(tasks)
         return this.tasks.size
@@ -211,7 +211,7 @@ class TasksAdapter: RecyclerView.Adapter<TasksAdapter.TaskViewHolder>() {
         }
     }
 
-    fun setInitial(tasks: List<DittoDocument<Map<String, Any>>>): Int {
+    fun setInitial(tasks: List<DittoDocument>): Int {
         this.tasks.addAll(tasks)
         this.notifyDataSetChanged()
         return this.tasks.size
