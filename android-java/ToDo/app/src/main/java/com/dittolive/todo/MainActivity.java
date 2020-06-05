@@ -85,8 +85,8 @@ public class MainActivity extends AppCompatActivity implements NewTaskDialogFrag
         SwipeToDeleteCallback swipeToDeleteCallback = new SwipeToDeleteCallback(this) {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-                DittoDocument<Map<String, Object>> task = tasksAdapter.tasks().get(viewHolder.getAdapterPosition());
-                ditto.getStore().collection("tasks").findByID(task._id).remove();
+                DittoDocument task = tasksAdapter.tasks().get(viewHolder.getAdapterPosition());
+                ditto.getStore().collection("tasks").findByID(task.id).remove();
             }
         };
 
@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements NewTaskDialogFrag
             @SuppressWarnings("unchecked")
             @Override
             public void update(@NotNull List documents, @NotNull DittoLiveQueryEvent event) {
-                final List<DittoDocument<Map<String, Object>>> tasks = (List<DittoDocument<Map<String, Object>>>) documents;
+                final List<DittoDocument> tasks = (List<DittoDocument>) documents;
                 if (event instanceof DittoLiveQueryEvent.Update) {
                     final DittoLiveQueryEvent.Update updateEvent = (DittoLiveQueryEvent.Update) event;
                     activity.runOnUiThread(new Runnable() {
@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements NewTaskDialogFrag
         }
 
         // We use observe to create a live query and a subscription to sync this query with other devices
-        this.liveQuery = collection.findAll().sort("dateCreated", true).observe(new LiveQueryHandler());
+        this.liveQuery = collection.findAll().sort("dateCreated", DittoSortDirection.Ascending).observe(new LiveQueryHandler());
     }
 
     void checkLocationPermission() {
@@ -191,21 +191,21 @@ public class MainActivity extends AppCompatActivity implements NewTaskDialogFrag
     }
 
     @Override
-    public void onItemClick(DittoDocument<Map<String, Object>> task) {
+    public void onItemClick(DittoDocument task) {
         class DocumentUpdater implements DittoSingleMutableDocumentUpdater {
             @Override
             public void update(@NotNull DittoMutableDocument doc) {
-                DittoMutableDocument<Map<String, Object>> mutableDoc = (DittoMutableDocument<Map<String, Object>>) doc;
+                DittoMutableDocument mutableDoc = (DittoMutableDocument) doc;
                 mutableDoc.get("isComplete").set(!mutableDoc.get("isComplete").getBooleanValue());
             }
         }
 
-        ditto.getStore().collection("tasks").findByID(task._id).update(new DocumentUpdater());
+        ditto.getStore().collection("tasks").findByID(task.id).update(new DocumentUpdater());
     }
 }
 
 class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHolder> {
-    private List<DittoDocument<Map<String, Object>>> tasks = new ArrayList<>();
+    private List<DittoDocument> tasks = new ArrayList<>();
     private LayoutInflater inflater;
     private ItemClickListener clickListener;
 
@@ -222,7 +222,7 @@ class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHolder> {
 
     @Override
     public void onBindViewHolder(final TaskViewHolder holder, int position) {
-        DittoDocument<Map<String, Object>> task = tasks.get(position);
+        DittoDocument task = tasks.get(position);
         holder.textView.setText(task.get("text").getStringValue());
         holder.checkBoxView.setChecked(task.get("isComplete").getBooleanValue());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -255,14 +255,14 @@ class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHolder> {
     }
 
     public interface ItemClickListener {
-        void onItemClick(DittoDocument<Map<String, Object>> task);
+        void onItemClick(DittoDocument task);
     }
 
-    List<DittoDocument<Map<String, Object>>> tasks() {
+    List<DittoDocument> tasks() {
         return this.tasks;
     }
 
-    int set(List<DittoDocument<Map<String, Object>>> tasksToSet) {
+    int set(List<DittoDocument> tasksToSet) {
         this.tasks.clear();
         this.tasks.addAll(tasksToSet);
         return this.tasks.size();
@@ -295,7 +295,7 @@ class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHolder> {
         }
     }
 
-    int setInitial(List<DittoDocument<Map<String, Object>>> tasksToSet) {
+    int setInitial(List<DittoDocument> tasksToSet) {
         this.tasks.addAll(tasksToSet);
         this.notifyDataSetChanged();
         return this.tasks.size();
