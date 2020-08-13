@@ -1,10 +1,10 @@
 PODS:
-  - DittoKit (0.3.3)
-  - DittoKitSwift (0.3.3):
-    - DittoKit (= 0.3.3)
+  - DittoKit (0.3.4)
+  - DittoKitSwift (0.3.4):
+    - DittoKit (= 0.3.4)
 
 DEPENDENCIES:
-  - DittoKitSwift (~> 0.3.3)
+  - DittoKitSwift (~> 0.3.4)
 
 SPEC REPOS:
   trunk:
@@ -12,9 +12,9 @@ SPEC REPOS:
     - DittoKitSwift
 
 SPEC CHECKSUMS:
-  DittoKit: 281aabe9f099b88314e0362b1a8c7dcdffe1fbdd
-  DittoKitSwift: 448a3b21d3bc2d5799892eccc2dc3ec6acad3997
+  DittoKit: a647b815ff520287116a16d546d024a9d954b40c
+  DittoKitSwift: aec87503127ba9f624dd9f34422e04627b1cb492
 
-PODFILE CHECKSUM: 889c50d954e1232af6650aa936fe09dda6c50f3a
+PODFILE CHECKSUM: 5cabf66a7652203e62151ccdcaee7489d1f0cfd6
 
 COCOAPODS: 1.9.3
