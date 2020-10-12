@@ -73,6 +73,6 @@ Thumbs.db
 
 
 # Ditto
-DittoKit.h
+DittoSyncKit.h
 libditto.a
-DittoKit.tar.gz
+DittoSyncKit.tar.gz

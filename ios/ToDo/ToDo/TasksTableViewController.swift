@@ -7,11 +7,11 @@
 //
 
 import UIKit
-import DittoKitSwift
+import DittoSyncKitSwift
 
 class TasksTableViewController: UITableViewController {
-    // These hold references to DittoKit for easy access
-    var ditto: DittoKit!
+    // These hold references to DittoSyncKit for easy access
+    var ditto: DittoSyncKit!
     var store: DittoStore!
     var liveQuery: DittoLiveQuery?
     var collection: DittoCollection!
@@ -25,20 +25,20 @@ class TasksTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Create an instance of DittoKit
-        ditto = DittoKit()
+        // Create an instance of DittoSyncKit
+        ditto = DittoSyncKit()
 
-        // Set your DittoKit access license
+        // Set your DittoSyncKit access license
         // The SDK will not work without this!
         ditto.setAccessLicense("<INSERT ACCESS LICENSE>")
 
-        // This starts DittoKit's background synchronization
+        // This starts DittoSyncKit's background synchronization
         ditto.start()
 
         // Create some helper variables for easy access
         store = ditto.store
         // We will store data in the "tasks" collection
-        // DittoKit stores data as collections of documents
+        // DittoSyncKit stores data as collections of documents
         collection = store.collection("tasks")
 
         // This function will create a "live-query" that will update
@@ -108,7 +108,7 @@ class TasksTableViewController: UITableViewController {
             if let text = alert.textFields?[0].text
             {
                 let dateString = self.dateFormatter.string(from: Date())
-                // Insert the data into DittoKit
+                // Insert the data into DittoSyncKit
                 let _ = try! self.collection.insert([
                     "text": text,
                     "dateCreated": dateString,
@@ -170,7 +170,7 @@ class TasksTableViewController: UITableViewController {
         if editingStyle == .delete {
             // Retrieve the task at the row swiped
             let task = tasks[indexPath.row]
-            // Delete the task from DittoKit
+            // Delete the task from DittoSyncKit
             try! collection.findByID(task.id).remove()
         }
     }

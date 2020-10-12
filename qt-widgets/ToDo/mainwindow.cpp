@@ -4,7 +4,7 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
-    , ditto(ditto::DittoKit())
+    , ditto(ditto::DittoSyncKit())
 {
     ui->setupUi(this);
 

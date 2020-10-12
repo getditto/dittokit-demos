@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.task_view.view.*
 import live.ditto.*
-import live.ditto.android.DefaultAndroidDittoKitDependencies
+import live.ditto.android.DefaultAndroidDittoSyncKitDependencies
 import java.time.Instant
 import java.time.format.DateTimeFormatter
 
@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity(), NewTaskDialogFragment.NewTaskDialogLis
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
 
-    private var ditto: DittoKit? = null
+    private var ditto: DittoSyncKit? = null
     private var collection: DittoCollection? = null
     private var liveQuery: DittoLiveQuery? = null
 
@@ -51,16 +51,16 @@ class MainActivity : AppCompatActivity(), NewTaskDialogFragment.NewTaskDialogLis
 
         recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
 
-        // Create an instance of DittoKit
-        val androidDependencies = DefaultAndroidDittoKitDependencies(applicationContext)
-        val ditto = DittoKit(androidDependencies)
+        // Create an instance of DittoSyncKit
+        val androidDependencies = DefaultAndroidDittoSyncKitDependencies(applicationContext)
+        val ditto = DittoSyncKit(androidDependencies)
         this.ditto = ditto
 
-        // Set your DittoKit access license
+        // Set your DittoSyncKit access license
         // The SDK will not work without this!
         ditto.setAccessLicense("<INSERT ACCESS LICENSE>")
 
-        // This starts DittoKit's background synchronization
+        // This starts DittoSyncKit's background synchronization
         ditto.start()
 
         // Add swipe to delete
@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity(), NewTaskDialogFragment.NewTaskDialogLis
                 val adapter = recyclerView.adapter as TasksAdapter
                 // Retrieve the task at the row swiped
                 val task = adapter.tasks()[viewHolder.adapterPosition]
-                // Delete the task from DittoKit
+                // Delete the task from DittoSyncKit
                 ditto.store.collection("tasks").findByID(task.id).remove()
             }
         }
