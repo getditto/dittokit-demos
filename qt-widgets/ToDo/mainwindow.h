@@ -6,7 +6,7 @@
 #include <QListWidgetItem>
 #include <QMainWindow>
 
-#include "DittoKit.h"
+#include "DittoSyncKit.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -40,7 +40,7 @@ signals:
 
 private:
     Ui::MainWindow *ui;
-    ditto::DittoKit ditto;
+    ditto::DittoSyncKit ditto;
     std::shared_ptr<ditto::LiveQuery> live_query;
 };
 #endif // MAINWINDOW_H

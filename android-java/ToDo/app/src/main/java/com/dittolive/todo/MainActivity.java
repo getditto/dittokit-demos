@@ -38,14 +38,14 @@ import java.util.List;
 import java.util.Map;
 
 import live.ditto.*;
-import live.ditto.android.DefaultAndroidDittoKitDependencies;
+import live.ditto.android.DefaultAndroidDittoSyncKitDependencies;
 
 public class MainActivity extends AppCompatActivity implements NewTaskDialogFragment.NewTaskDialogListener, TasksAdapter.ItemClickListener {
     private RecyclerView recyclerView = null;
     private RecyclerView.Adapter viewAdapter = null;
     private RecyclerView.LayoutManager viewManager = null;
 
-    private DittoKit ditto = null;
+    private DittoSyncKit ditto = null;
     private DittoCollection collection = null;
     private DittoLiveQuery liveQuery = null;
 
@@ -69,16 +69,16 @@ public class MainActivity extends AppCompatActivity implements NewTaskDialogFrag
 
         this.recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
-        // Create an instance of DittoKit
-        DefaultAndroidDittoKitDependencies androidDependencies = new DefaultAndroidDittoKitDependencies(getApplicationContext());
-        final DittoKit ditto = new DittoKit(androidDependencies);
+        // Create an instance of DittoSyncKit
+        DefaultAndroidDittoSyncKitDependencies androidDependencies = new DefaultAndroidDittoSyncKitDependencies(getApplicationContext());
+        final DittoSyncKit ditto = new DittoSyncKit(androidDependencies);
         this.ditto = ditto;
 
-        // Set your DittoKit access license
+        // Set your DittoSyncKit access license
         // The SDK will not work without this!
         ditto.setAccessLicense("<INSERT ACCESS LICENSE>");
 
-        // This starts DittoKit's background synchronization
+        // This starts DittoSyncKit's background synchronization
         ditto.start();
 
         // Add swipe to delete
